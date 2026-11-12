@@ -64,6 +64,7 @@ button,input{font:inherit;color:inherit}
 .rgroup{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
 .rgroup h3{font-size:21px;padding:14px 16px 4px}
 .rgroup .count{font-family:var(--body);font-weight:400;color:var(--muted);font-size:15px}
+.prio{display:inline-block;margin:2px 16px 10px;padding:3px 10px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:14px;font-weight:700}
 .hit{display:block;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:12px 16px;cursor:pointer;font-size:16px}
 .hit .pg{display:inline-block;font-weight:700;color:var(--accent);margin-right:6px}
 .more{display:block;width:100%;border:0;border-top:1px solid var(--line);background:none;padding:12px;color:var(--accent);font-weight:700;cursor:pointer}
@@ -195,6 +196,9 @@ function searchAll(q){
     d.idx.forEach((txt,i)=>{ if(ts.every(t=>txt.includes(t))) hits.push(i); });
     if(hits.length) res.push({d,hits});
   }
+  // search results: PLA first (it overrides the CBA on the Micron job), then its travel pay change, then the rest
+  const ORDER=['pla','travel-pay','cba','veca','bylaws','constitution'];
+  res.sort((a,b)=>ORDER.indexOf(a.d.id)-ORDER.indexOf(b.d.id));
   return {ts,res};
 }
 function snippet(d, i, ts){
@@ -227,7 +231,7 @@ function renderResults(){
   $('#results').innerHTML = `<p class="rsum">Found on ${total} page${total>1?'s':''} in ${r.res.length} document${r.res.length>1?'s':''}</p>` +
     r.res.map(({d,hits})=>{
       const n=shown[d.id]||5;
-      return `<div class="rgroup"><h3>${esc(d.title)} <span class="count">· ${hits.length} page${hits.length>1?'s':''}</span></h3>${
+      return `<div class="rgroup"><h3>${esc(d.title)} <span class="count">· ${hits.length} page${hits.length>1?'s':''}</span></h3>${d.id==='pla'?'<div class="prio">Takes priority over the CBA</div>':''}${
         hits.slice(0,n).map(i=>`<button type="button" class="hit" data-doc="${d.id}" data-page="${i}"><span class="pg">Page ${i+1}</span>${highlight(snippet(d,i,r.ts),re)}</button>`).join('')
       }${hits.length>n?`<button type="button" class="more" data-more="${d.id}">Show ${hits.length-n} more in this document</button>`:''}</div>`;
     }).join('');
