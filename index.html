@@ -6,35 +6,33 @@
 <title>Local 291 Contract Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Anton&family=Creepster&display=swap" rel="stylesheet">
 <style>
 /* Layout: one narrow reading column. Home = grouped list of documents + search. Doc = sticky search bar, section list, then pages. */
 :root{
-  --bg:#f3f5f8; --surface:#ffffff; --ink:#18202b; --muted:#5a6676; --line:#d9dee6;
-  --accent:#1d4f91; --accent-ink:#ffffff; --mark:#ffd34d; --mark-on:#ff9f1a;
-  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  /* Layout: one narrow reading column under a dripping toxic-green band. Home = grouped docs + search. Doc = sticky search bar, sections, pages. */
+  --bg:#0b0d09; --surface:#151a12; --ink:#eef3e8; --muted:#a6b39c; --line:#29331f;
+  --accent:#8EDB1F; --accent-ink:#0b0d09; --mark:#8EDB1F; --mark-on:#d6ff5c;
+  --display:"Anton",Impact,"Arial Narrow",sans-serif;
+  --goo:"Creepster","Anton",Impact,sans-serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  color-scheme:light;
+  --drip:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='46' viewBox='0 0 160 46'%3E%3Cpath fill='%238EDB1F' d='M0 0h160v10H0zM8 9h9v14a4.5 4.5 0 0 1-9 0z M30 9h7v26a3.5 3.5 0 0 1-7 0z M52 9h11v9a5.5 5.5 0 0 1-11 0zM78 9h8v30a4 4 0 0 1-8 0z M101 9h10v16a5 5 0 0 1-10 0z M126 9h7v8a3.5 3.5 0 0 1-7 0z M144 9h9v21a4.5 4.5 0 0 1-9 0z'/%3E%3C/svg%3E");
+  color-scheme:dark;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#11161d; --surface:#1a212b; --ink:#e8edf3; --muted:#9aa7b7; --line:#2c3644;
-  --accent:#7fb0f0; --accent-ink:#0d1520; --mark:#8a6a00; --mark-on:#c26a00; color-scheme:dark;}}
-:root[data-theme="dark"]{
-  --bg:#11161d; --surface:#1a212b; --ink:#e8edf3; --muted:#9aa7b7; --line:#2c3644;
-  --accent:#7fb0f0; --accent-ink:#0d1520; --mark:#8a6a00; --mark-on:#c26a00; color-scheme:dark;}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:18px/1.55 var(--body);-webkit-text-size-adjust:100%}
+body{background:var(--bg);background-image:var(--drip);background-repeat:repeat-x;background-position:top left;color:var(--ink);font:18px/1.55 var(--body);-webkit-text-size-adjust:100%}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px 80px}
-h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:.01em;text-wrap:balance;margin:0}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:.02em;text-wrap:balance;margin:0}
 button,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .hidden{display:none!important}
 
 /* header */
-.top{padding:28px 0 16px}
-.top .kicker{font-family:var(--display);font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700}
-.top h1{font-size:40px;line-height:1.05;margin-top:2px}
+.top{padding:58px 0 16px}
+.top .kicker{font-family:var(--display);font-size:17px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.top h1{font-family:var(--goo);font-size:clamp(40px,12.5vw,64px);line-height:1;margin-top:4px;color:var(--accent);letter-spacing:.03em;text-shadow:0 3px 0 #000}
+.top .tag{font-family:var(--display);color:var(--ink);font-size:18px;letter-spacing:.12em;text-transform:uppercase;margin-top:4px}
 .top p{margin:8px 0 0;color:var(--muted);font-size:16px}
 
 /* search box */
@@ -49,40 +47,42 @@ button,input{font:inherit;color:inherit}
 
 /* doc list */
 .group{margin-top:28px}
-.group h2{font-size:20px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+.group h2{font-size:21px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:10px}
 .cards{display:grid;gap:10px}
 .card{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer;text-decoration:none;color:inherit}
 .card:active{transform:scale(.99)}
 .card .tab{flex:none;width:8px;align-self:stretch;border-radius:4px;background:var(--accent)}
 .card .t{font-weight:700;font-size:19px;line-height:1.25}
+.card:hover,.card:focus-visible{border-color:var(--accent)}
 .card .s{color:var(--muted);font-size:15px;margin-top:2px}
-.card .arrow{margin-left:auto;font-size:26px;color:var(--muted);flex:none}
+.card .arrow{margin-left:auto;font-size:26px;color:var(--accent);flex:none}
 
 /* results */
 .results{margin-top:20px}
 .rsum{font-weight:700;margin:0 2px 10px}
 .rgroup{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
-.rgroup h3{font-size:21px;padding:14px 16px 4px}
+.rgroup h3{font-size:23px;padding:14px 16px 4px}
 .rgroup .count{font-family:var(--body);font-weight:400;color:var(--muted);font-size:15px}
 .prio{display:inline-block;margin:2px 16px 10px;padding:3px 10px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:14px;font-weight:700}
 .hit{display:block;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:12px 16px;cursor:pointer;font-size:16px}
 .hit .pg{display:inline-block;font-weight:700;color:var(--accent);margin-right:6px}
 .more{display:block;width:100%;border:0;border-top:1px solid var(--line);background:none;padding:12px;color:var(--accent);font-weight:700;cursor:pointer}
-mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
+mark{background:var(--mark);color:#0b0d09;border-radius:3px;padding:0 1px}
 mark.on{background:var(--mark-on);box-shadow:0 0 0 2px var(--mark-on)}
 
 /* doc view */
-.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 10px;border-bottom:1px solid var(--line)}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 10px;border-bottom:3px solid var(--accent)}
+#doc{padding-top:34px}
 .barrow{display:flex;gap:8px;align-items:center}
 .back{flex:none;height:54px;padding:0 14px;border:0;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-weight:700;cursor:pointer;font-size:17px}
 #dform{min-width:0}
 .nav{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:15px;color:var(--muted)}
 .nav button{height:40px;min-width:48px;border:1px solid var(--line);background:var(--surface);border-radius:10px;cursor:pointer;font-size:16px}
 .dhead{padding:20px 0 4px}
-.dhead .g{font-family:var(--display);font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700}
-.dhead h1{font-size:34px;line-height:1.08;margin-top:2px}
+.dhead .g{font-family:var(--display);font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.dhead h1{font-size:36px;line-height:1.08;margin-top:2px}
 .dhead .s{color:var(--muted);font-size:16px;margin-top:4px}
-.note{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--mark-on);border-radius:10px;padding:10px 14px;font-size:15px;margin-top:12px}
+.note{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--accent);border-radius:10px;padding:10px 14px;font-size:15px;margin-top:12px}
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .btn{height:46px;padding:0 16px;border-radius:10px;border:2px solid var(--accent);background:transparent;color:var(--accent);font-weight:700;cursor:pointer;font-size:16px}
 details.toc{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-top:14px}
@@ -91,13 +91,14 @@ details.toc summary{padding:14px 16px;font-weight:700;cursor:pointer;font-size:1
 .toc li button{display:flex;gap:10px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:11px 16px;cursor:pointer;font-size:16px}
 .toc li .p{margin-left:auto;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
 .page{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px 18px 14px;margin-top:14px;scroll-margin-top:140px}
-.plabel{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:8px 0 2px;border-bottom:1px dashed var(--line);margin-bottom:6px;font-variant-numeric:tabular-nums}
+.plabel{font-family:var(--display);font-weight:400;font-size:16px;letter-spacing:.12em;color:var(--accent)!important;text-transform:uppercase;color:var(--muted);padding:8px 0 2px;border-bottom:1px dashed var(--line);margin-bottom:6px;font-variant-numeric:tabular-nums}
 .page p{margin:10px 0;white-space:pre-line;overflow-wrap:anywhere}
 .pjump{border:0;background:none;color:var(--accent);font-weight:700;text-decoration:underline;cursor:pointer;padding:2px 4px;font-size:inherit;white-space:nowrap}
 .page p.h{font-weight:700;font-size:19px}
 .empty{color:var(--muted);font-style:italic}
 .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:15px;z-index:20;max-width:90vw}
 .foot{color:var(--muted);font-size:14px;margin-top:36px;border-top:1px solid var(--line);padding-top:14px}
+.goo{font-family:var(--goo);color:var(--accent);font-size:30px;text-align:center;margin-top:28px;letter-spacing:.04em}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
@@ -108,6 +109,7 @@ details.toc summary{padding:14px 16px;font-weight:700;cursor:pointer;font-size:1
   <header class="top">
     <div class="kicker">IBEW Local 291 · Boise</div>
     <h1>Contract Library</h1>
+    <div class="tag">Infected by brotherhood</div>
     <p>Tap a document to read it, or search all of them at once.</p>
   </header>
   <form class="search" id="gform" role="search">
@@ -122,6 +124,7 @@ details.toc summary{padding:14px 16px;font-weight:700;cursor:pointer;font-size:1
   <div id="results" class="results hidden"></div>
   <div id="list"></div>
   <div class="foot" id="foot"></div>
+  <div class="goo">Solidarity spreads</div>
 </section>
 
 <section id="doc" class="hidden">
